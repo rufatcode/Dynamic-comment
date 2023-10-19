@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "Update";
+}
+
+@model UpdateProductVM
+<div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Create Product form</h4>
+            <p class="card-description">
+                Basic Product layout
+            </p>
+            <ul>
+                @foreach (var image in Model.Images)
+                {
+                        <li style="list-style:none;">
+                                <img width="150" height="150" src="~/assets/img/@image" />
+                        </li>
+                }
+            </ul>
+            <form class="forms-sample" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <input asp-for="formFiles" class="form-control">
+                    <span class="text-danger" asp-validation-for="formFiles"></span>
+                </div>
+                <div class="form-group">
+                    <label>Catagory</label>
+                    <select asp-for="CategoryId" asp-items="@ViewBag.Catagories"></select>
+                    <span class="text-danger" asp-validation-for="CategoryId"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control" placeholder="Name">
+                    <span class="text-danger" asp-validation-for="Name"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Price"></label>
+                    <input asp-for="Price" class="form-control" placeholder="Price">
+                    <span class="text-danger" asp-validation-for="Price"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description"></label>
+                    <input asp-for="Description" class="form-control" placeholder="Description">
+                    <span class="text-danger" asp-validation-for="Description"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SalePercantage"></label>
+                    <input asp-for="SalePercantage" class="form-control" placeholder="SalePercantage">
+                    <span class="text-danger" asp-validation-for="SalePercantage"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                <a asp-action="Index" class="btn btn-light">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>

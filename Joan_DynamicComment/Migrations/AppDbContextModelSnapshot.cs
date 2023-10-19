@@ -22,6 +22,58 @@ namespace Joan_DynamicComment.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("Joan_DynamicComment.Models.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("Joan_DynamicComment.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AppUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Comment");
+                });
+
             modelBuilder.Entity("Joan_DynamicComment.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -29,6 +81,9 @@ namespace Joan_DynamicComment.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -45,6 +100,8 @@ namespace Joan_DynamicComment.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
                 });
@@ -103,22 +160,22 @@ namespace Joan_DynamicComment.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c498d2fb-216d-4849-a2f6-eb9ae68d6c6f",
-                            ConcurrencyStamp = "c498d2fb-216d-4849-a2f6-eb9ae68d6c6f",
+                            Id = "54a25f0a-a424-4f5c-899e-625318cb5422",
+                            ConcurrencyStamp = "54a25f0a-a424-4f5c-899e-625318cb5422",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "07e8b8f0-33b0-4b69-95b3-2ff14e581617",
-                            ConcurrencyStamp = "07e8b8f0-33b0-4b69-95b3-2ff14e581617",
+                            Id = "8aba25a5-9425-4e83-b2cd-ec464222ebea",
+                            ConcurrencyStamp = "8aba25a5-9425-4e83-b2cd-ec464222ebea",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "c79119dc-2781-4f74-90a0-2621a306f3a4",
-                            ConcurrencyStamp = "c79119dc-2781-4f74-90a0-2621a306f3a4",
+                            Id = "47314eeb-7be5-4469-b3f0-79a68e38ac22",
+                            ConcurrencyStamp = "47314eeb-7be5-4469-b3f0-79a68e38ac22",
                             Name = "SupperAdmin",
                             NormalizedName = "SUPPERADMIN"
                         });
@@ -284,13 +341,13 @@ namespace Joan_DynamicComment.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "b1293979-462f-4816-b956-a1a7c66c50fb",
-                            RoleId = "07e8b8f0-33b0-4b69-95b3-2ff14e581617"
+                            UserId = "215b4ba2-b1ef-4fa1-a0af-96774daeacec",
+                            RoleId = "8aba25a5-9425-4e83-b2cd-ec464222ebea"
                         },
                         new
                         {
-                            UserId = "28631122-5d20-4bc7-b1a5-2948fb7acdbb",
-                            RoleId = "c79119dc-2781-4f74-90a0-2621a306f3a4"
+                            UserId = "56646946-3ee5-4782-b87c-5d103a700069",
+                            RoleId = "47314eeb-7be5-4469-b3f0-79a68e38ac22"
                         });
                 });
 
@@ -326,38 +383,68 @@ namespace Joan_DynamicComment.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b1293979-462f-4816-b956-a1a7c66c50fb",
+                            Id = "215b4ba2-b1ef-4fa1-a0af-96774daeacec",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f1fcb5bb-08c4-46f0-8a07-0943dc6c7015",
+                            ConcurrencyStamp = "d7e10652-0d45-4fb0-818d-db47cc9b131d",
                             Email = "rft.smayilov@bk.ru",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "RFT.SMAYILOV@BK.RU",
                             NormalizedUserName = "RUFAT1122",
-                            PasswordHash = "AQAAAAEAACcQAAAAEG0CJrpNUQFqnu7SBVnFqlqTw6ubCqWbb7zBv/A/JG+wPdghOn+s3yE+wqVzqU0B4w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENWrUtBSpMqBUwf1MJM4VLzyKJdg4Iyzcuyedzmg5Byu1fJloiPocW7bKbRhlerSsg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "dabaf5f7-21c8-4212-a12c-feaebad74d1d",
+                            SecurityStamp = "63ffa3c9-e83a-44c6-be06-d9d1e225b873",
                             TwoFactorEnabled = false,
                             UserName = "Rufat1122",
                             FullName = "RufatCode"
                         },
                         new
                         {
-                            Id = "28631122-5d20-4bc7-b1a5-2948fb7acdbb",
+                            Id = "56646946-3ee5-4782-b87c-5d103a700069",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "dd369d39-4e62-4d6b-9fda-da0cb50537c4",
+                            ConcurrencyStamp = "f09fee25-cb32-447a-95e9-b8e3ca211d2b",
                             Email = "rufatri@code.edu.az",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "RUFATRI@CODE.EDU.AZ",
                             NormalizedUserName = "RUFAT123",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPNJpuyRuyhQzXW0v112QrCT/tdwu8kqQjQopH5wWPpaOwDKBeQSR+n52BCwlfm6fA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAefjsbOouLnHZ3268yG6Q4ugV9TdfO3ZUGfkGv8dU4J51C6FCsIv7pPhoI2gQiz6A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "05f1d007-2e6c-4ed3-aa83-291c9b8ba749",
+                            SecurityStamp = "3020dc6c-81a7-43cc-be09-2dfba6fab147",
                             TwoFactorEnabled = false,
                             UserName = "Rufat123",
                             FullName = "RufatIsmayilov"
                         });
+                });
+
+            modelBuilder.Entity("Joan_DynamicComment.Models.Comment", b =>
+                {
+                    b.HasOne("Joan_DynamicComment.Models.AppUser", "AppUser")
+                        .WithMany("Comments")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Joan_DynamicComment.Models.Product", "Product")
+                        .WithMany("Comments")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Joan_DynamicComment.Models.Product", b =>
+                {
+                    b.HasOne("Joan_DynamicComment.Models.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Joan_DynamicComment.Models.ProductImage", b =>
@@ -422,9 +509,21 @@ namespace Joan_DynamicComment.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Joan_DynamicComment.Models.Category", b =>
+                {
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("Joan_DynamicComment.Models.Product", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("ProductImages");
+                });
+
+            modelBuilder.Entity("Joan_DynamicComment.Models.AppUser", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

@@ -7,8 +7,11 @@ namespace Joan_DynamicComment.Models
 	public class AppUser:IdentityUser
 	{
 		public string FullName { get; set; }
-		public AppUser()
+		public List<Comment> Comments { get; set; }
+		public bool IsActive { get; set; }
+        public AppUser()
 		{
+			Comments = new();
 		}
 	}
 }

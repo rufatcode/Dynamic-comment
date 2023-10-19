@@ -19,7 +19,7 @@
                             <th>Name</th>
                             <th>Price</th>
                             <th>SalePercantage</th>
-                            <th>Status</th>
+                            <th>Settings</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -30,8 +30,8 @@
                                     <img src="~/assets/img/@product.ProductImages.FirstOrDefault(pi=>pi.IsMain).ImgUrl" />
                                 </td>
                                 <td>@product.Name</td>
-                                <td>@product.Price</td>
-                                <td>@product.SalePercantage</td>
+                                <td>@product.Price$</td>
+                                <td>@product.SalePercantage%</td>
                                 <td>
                                     <a asp-action="Delete" asp-route-id="@product.Id"><i class="mdi mdi-delete btn btn-outline-danger "> </i></a>
                                     <a asp-action="Update" asp-route-id="@product.Id"><i class="mdi mdi-table-edit btn btn-outline-warning"> </i></a>

@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Detail";
+}
+
+
+@model Product
+<div class="col-lg-10 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Product Table</h4>
+            <a class="btn btn-primary" style="text-decoration:none;" asp-action="Create">Create Product</a>
+            <p class="card-description">
+                Add class <code>.table</code>
+            </p>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>SalePercantage</th>
+                            <th>Catagory</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <ul>
+                                    @foreach (var item in Model.ProductImages)
+                                    {
+                                        <li style="list-style:none;">
+                                            <img src="~/assets/img/@item.ImgUrl" />
+                                        </li>
+                                    }
+                                </ul>
+
+                            </td>
+                            <td>@Model.Name</td>
+                            <td>@Model.Price$</td>
+                            <td>@Model.SalePercantage%</td>
+                            <td>@Model.Category.Name</td>
+                           
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

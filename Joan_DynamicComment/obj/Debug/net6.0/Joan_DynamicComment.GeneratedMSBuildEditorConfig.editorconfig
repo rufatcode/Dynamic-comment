@@ -72,8 +72,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXMvQWRtaW5BcmVhL1ZpZXdzL1Byb2R1Y3QvQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Volumes/Mac/AspNet/Joan_DynamicComment/Joan_DynamicComment/Areas/AdminArea/Views/Product/Detail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvQWRtaW5BcmVhL1ZpZXdzL1Byb2R1Y3QvRGV0YWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Volumes/Mac/AspNet/Joan_DynamicComment/Joan_DynamicComment/Areas/AdminArea/Views/Product/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXMvQWRtaW5BcmVhL1ZpZXdzL1Byb2R1Y3QvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Volumes/Mac/AspNet/Joan_DynamicComment/Joan_DynamicComment/Areas/AdminArea/Views/Product/Update.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvQWRtaW5BcmVhL1ZpZXdzL1Byb2R1Y3QvVXBkYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Volumes/Mac/AspNet/Joan_DynamicComment/Joan_DynamicComment/Areas/AdminArea/Views/Shared/_AdminLayout.cshtml]
@@ -86,6 +94,34 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/Volumes/Mac/AspNet/Joan_DynamicComment/Joan_DynamicComment/Areas/AdminArea/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXMvQWRtaW5BcmVhL1ZpZXdzL19WaWV3U3RhcnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Volumes/Mac/AspNet/Joan_DynamicComment/Joan_DynamicComment/Views/Account/ForgetPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9Gb3JnZXRQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Volumes/Mac/AspNet/Joan_DynamicComment/Joan_DynamicComment/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9Mb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Volumes/Mac/AspNet/Joan_DynamicComment/Joan_DynamicComment/Views/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9SZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Volumes/Mac/AspNet/Joan_DynamicComment/Joan_DynamicComment/Views/Account/ResetPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9SZXNldFBhc3N3b3JkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Volumes/Mac/AspNet/Joan_DynamicComment/Joan_DynamicComment/Views/Account/TokenIsNotValid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9Ub2tlbklzTm90VmFsaWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Volumes/Mac/AspNet/Joan_DynamicComment/Joan_DynamicComment/Views/Account/VerifyEmail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9WZXJpZnlFbWFpbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Volumes/Mac/AspNet/Joan_DynamicComment/Joan_DynamicComment/Views/Home/Detail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9EZXRhaWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Volumes/Mac/AspNet/Joan_DynamicComment/Joan_DynamicComment/Views/Home/Index.cshtml]

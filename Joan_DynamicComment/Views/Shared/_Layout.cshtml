@@ -281,9 +281,17 @@
                                                 <i class="ion-ios-gear-outline"></i>
                                             </a>
                                             <ul class="dropdown-list">
-                                                <li><a href="login-register.html">login</a></li>
-                                                <li><a href="login-register.html">register</a></li>
-                                                <li><a href="my-account.html">my account</a></li>
+                                                <li><a asp-controller="Account" asp-action="Login">login</a></li>
+                                                <li><a asp-controller="Account" asp-action="Register">register</a></li>
+                                                @if (User.Identity.IsAuthenticated)
+                                                {
+                                                    <li><a asp-controller="Account" asp-action="Logout">my account</a></li>
+                                                }
+                                                else
+                                                {
+                                                      <li><a asp-area="AdminArea" asp-controller="Product" asp-action="Index">my account</a></li>
+                                                }
+                                                
                                             </ul>
                                         </li>
                                         <li>
