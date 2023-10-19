@@ -8,6 +8,8 @@ namespace Joan_DynamicComment.DAL
 {
 	public class AppDbContext:IdentityDbContext
 	{
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
 		public AppDbContext(DbContextOptions options):base(options)
 		{
 		}

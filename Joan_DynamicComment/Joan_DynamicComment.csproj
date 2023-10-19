@@ -13,6 +13,15 @@
     <None Remove="Views\Shared\" />
     <None Remove="Views\Home\" />
     <None Remove="Models\" />
+    <None Remove="Areas\" />
+    <None Remove="Areas\AdminArea\" />
+    <None Remove="Areas\AdminArea\Controllers\" />
+    <None Remove="Areas\AdminArea\Views\" />
+    <None Remove="Areas\AdminArea\Views\Shared\" />
+    <None Remove="Areas\AdminArea\Views\Dashboard\" />
+    <None Remove="Areas\AdminArea\Views\Product\" />
+    <None Remove="ViewModel\" />
+    <None Remove="ViewModel\ProductVM\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DAL\" />
@@ -21,6 +30,15 @@
     <Folder Include="Views\Shared\" />
     <Folder Include="Views\Home\" />
     <Folder Include="Models\" />
+    <Folder Include="Areas\" />
+    <Folder Include="Areas\AdminArea\" />
+    <Folder Include="Areas\AdminArea\Controllers\" />
+    <Folder Include="Areas\AdminArea\Views\" />
+    <Folder Include="Areas\AdminArea\Views\Shared\" />
+    <Folder Include="Areas\AdminArea\Views\Dashboard\" />
+    <Folder Include="Areas\AdminArea\Views\Product\" />
+    <Folder Include="ViewModel\" />
+    <Folder Include="ViewModel\ProductVM\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.0">

@@ -1,34 +1,39 @@
 ﻿<Properties StartupConfiguration="{B144BAF0-A486-424E-9096-0ACCE4EB4A6F}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Joan_DynamicComment/DAL/AppDbContext.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Joan_DynamicComment/Areas/AdminArea/Controllers/ProductController.cs">
     <Files>
-      <File FileName="Joan_DynamicComment/DAL/AppDbContext.cs" Line="48" Column="67" />
-      <File FileName="Joan_DynamicComment/ServiceRegistration.cs" Line="36" Column="48" />
+      <File FileName="Joan_DynamicComment/Program.cs" Line="29" Column="1" />
+      <File FileName="Joan_DynamicComment/Areas/AdminArea/Views/Shared/_AdminLayout.cshtml" />
+      <File FileName="Joan_DynamicComment/Views/Home/Index.cshtml" />
+      <File FileName="Joan_DynamicComment/Areas/AdminArea/Controllers/ProductController.cs" Line="64" Column="14" />
+      <File FileName="Joan_DynamicComment/Properties/launchSettings.json" Line="14" Column="47" />
+      <File FileName="Joan_DynamicComment/Areas/AdminArea/Views/Product/Index.cshtml" Line="6" Column="22" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Joan_DynamicComment" expanded="True">
-            <Node name="Joan_DynamicComment" expanded="True">
-              <Node name="Controllers" expanded="True" />
-              <Node name="DAL" expanded="True">
-                <Node name="AppDbContext.cs" selected="True" />
+            <Node name="Joan_DynamicComment">
+              <Node name="Areas" expanded="True">
+                <Node name="AdminArea" expanded="True">
+                  <Node name="Controllers" expanded="True">
+                    <Node name="ProductController.cs" selected="True" />
+                  </Node>
+                  <Node name="Views" expanded="True">
+                    <Node name="Product" expanded="True" />
+                  </Node>
+                </Node>
               </Node>
-              <Node name="Models" expanded="True" />
-              <Node name="Views" expanded="True">
-                <Node name="Shared" expanded="True" />
-              </Node>
-              <Node name="wwwroot" expanded="True" />
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.Joan__DynamicComment PreferredExecutionTarget="/Applications/Google Chrome.app" FirstBuild="True" />
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Joan__DynamicComment PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

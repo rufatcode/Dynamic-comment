@@ -22,6 +22,58 @@ namespace Joan_DynamicComment.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("Joan_DynamicComment.Models.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SalePercantage")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Joan_DynamicComment.Models.ProductImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ImgUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductImages");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -51,22 +103,22 @@ namespace Joan_DynamicComment.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "fa9a1063-bbb1-4712-a1fc-df620395204a",
-                            ConcurrencyStamp = "fa9a1063-bbb1-4712-a1fc-df620395204a",
+                            Id = "c498d2fb-216d-4849-a2f6-eb9ae68d6c6f",
+                            ConcurrencyStamp = "c498d2fb-216d-4849-a2f6-eb9ae68d6c6f",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "607a217e-c168-492f-85ae-8e2195aa7182",
-                            ConcurrencyStamp = "607a217e-c168-492f-85ae-8e2195aa7182",
+                            Id = "07e8b8f0-33b0-4b69-95b3-2ff14e581617",
+                            ConcurrencyStamp = "07e8b8f0-33b0-4b69-95b3-2ff14e581617",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "2ee762ec-a6bc-4e2f-8ebf-7782ad92d56f",
-                            ConcurrencyStamp = "2ee762ec-a6bc-4e2f-8ebf-7782ad92d56f",
+                            Id = "c79119dc-2781-4f74-90a0-2621a306f3a4",
+                            ConcurrencyStamp = "c79119dc-2781-4f74-90a0-2621a306f3a4",
                             Name = "SupperAdmin",
                             NormalizedName = "SUPPERADMIN"
                         });
@@ -232,13 +284,13 @@ namespace Joan_DynamicComment.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "830a2325-e784-487a-b654-e6b90e22da03",
-                            RoleId = "607a217e-c168-492f-85ae-8e2195aa7182"
+                            UserId = "b1293979-462f-4816-b956-a1a7c66c50fb",
+                            RoleId = "07e8b8f0-33b0-4b69-95b3-2ff14e581617"
                         },
                         new
                         {
-                            UserId = "6e121aff-c2a8-414f-a1d2-04b99a040ccf",
-                            RoleId = "2ee762ec-a6bc-4e2f-8ebf-7782ad92d56f"
+                            UserId = "28631122-5d20-4bc7-b1a5-2948fb7acdbb",
+                            RoleId = "c79119dc-2781-4f74-90a0-2621a306f3a4"
                         });
                 });
 
@@ -274,38 +326,49 @@ namespace Joan_DynamicComment.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "830a2325-e784-487a-b654-e6b90e22da03",
+                            Id = "b1293979-462f-4816-b956-a1a7c66c50fb",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4eff8f53-6f7e-4ec9-8b48-f1161464296b",
+                            ConcurrencyStamp = "f1fcb5bb-08c4-46f0-8a07-0943dc6c7015",
                             Email = "rft.smayilov@bk.ru",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "RFT.SMAYILOV@BK.RU",
                             NormalizedUserName = "RUFAT1122",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIIxE1PUswnHeVY6sdDTsrIDXvtXR3GgaNeaHVZnXuqTIxLLFy5l1pJAOkGa1jOnhQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEG0CJrpNUQFqnu7SBVnFqlqTw6ubCqWbb7zBv/A/JG+wPdghOn+s3yE+wqVzqU0B4w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1617ab74-4d43-41f0-87ad-78b89e545db0",
+                            SecurityStamp = "dabaf5f7-21c8-4212-a12c-feaebad74d1d",
                             TwoFactorEnabled = false,
                             UserName = "Rufat1122",
                             FullName = "RufatCode"
                         },
                         new
                         {
-                            Id = "6e121aff-c2a8-414f-a1d2-04b99a040ccf",
+                            Id = "28631122-5d20-4bc7-b1a5-2948fb7acdbb",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d2ca6981-be5d-4199-9071-9a4b56c41e44",
+                            ConcurrencyStamp = "dd369d39-4e62-4d6b-9fda-da0cb50537c4",
                             Email = "rufatri@code.edu.az",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "RUFATRI@CODE.EDU.AZ",
                             NormalizedUserName = "RUFAT123",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIpCj0ztJkC5j4HZCqq9kvLclfXsXUoKk2nD3yxrcz/q4hT6u09MmiUjJc7vIJ7yNg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPNJpuyRuyhQzXW0v112QrCT/tdwu8kqQjQopH5wWPpaOwDKBeQSR+n52BCwlfm6fA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b8592727-acbd-42bb-9c9b-1783a2b72d95",
+                            SecurityStamp = "05f1d007-2e6c-4ed3-aa83-291c9b8ba749",
                             TwoFactorEnabled = false,
                             UserName = "Rufat123",
                             FullName = "RufatIsmayilov"
                         });
+                });
+
+            modelBuilder.Entity("Joan_DynamicComment.Models.ProductImage", b =>
+                {
+                    b.HasOne("Joan_DynamicComment.Models.Product", "Product")
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -357,6 +420,11 @@ namespace Joan_DynamicComment.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Joan_DynamicComment.Models.Product", b =>
+                {
+                    b.Navigation("ProductImages");
                 });
 #pragma warning restore 612, 618
         }
