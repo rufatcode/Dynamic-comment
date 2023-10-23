@@ -60,7 +60,12 @@ namespace Joan_DynamicComment.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -71,7 +76,72 @@ namespace Joan_DynamicComment.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Comment");
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("Joan_DynamicComment.Models.NavBar", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("NavBars");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Key = "Location",
+                            Value = "184 Main Rd E, St Albans VIC 3021, Australia"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Key = "Mail",
+                            Value = "rft.smayilov@bk.com"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Key = "Phone",
+                            Value = "+ 00 254 254565"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Key = "LinkendIn",
+                            Value = "https://www.linkedin.com/in/rufat-ismayilov/"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Key = "Instegram",
+                            Value = "https://www.integram.com/in/rufat-ismayilov/"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Key = "Facebook",
+                            Value = "https://www.Facebook.com/in/rufat-ismayilov/"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Key = "Twitter",
+                            Value = "https://www.Twitter.com/in/rufat-ismayilov/"
+                        });
                 });
 
             modelBuilder.Entity("Joan_DynamicComment.Models.Product", b =>
@@ -85,9 +155,23 @@ namespace Joan_DynamicComment.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsAvaliable")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -160,22 +244,22 @@ namespace Joan_DynamicComment.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "54a25f0a-a424-4f5c-899e-625318cb5422",
-                            ConcurrencyStamp = "54a25f0a-a424-4f5c-899e-625318cb5422",
+                            Id = "ea25b410-add9-43b0-87f0-a3f6217406cf",
+                            ConcurrencyStamp = "ea25b410-add9-43b0-87f0-a3f6217406cf",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "8aba25a5-9425-4e83-b2cd-ec464222ebea",
-                            ConcurrencyStamp = "8aba25a5-9425-4e83-b2cd-ec464222ebea",
+                            Id = "a6e00b56-cd3c-455f-9ce1-691cfe948bf8",
+                            ConcurrencyStamp = "a6e00b56-cd3c-455f-9ce1-691cfe948bf8",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "47314eeb-7be5-4469-b3f0-79a68e38ac22",
-                            ConcurrencyStamp = "47314eeb-7be5-4469-b3f0-79a68e38ac22",
+                            Id = "2653a245-d343-43ba-bc89-90a64bbbece7",
+                            ConcurrencyStamp = "2653a245-d343-43ba-bc89-90a64bbbece7",
                             Name = "SupperAdmin",
                             NormalizedName = "SUPPERADMIN"
                         });
@@ -341,13 +425,13 @@ namespace Joan_DynamicComment.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "215b4ba2-b1ef-4fa1-a0af-96774daeacec",
-                            RoleId = "8aba25a5-9425-4e83-b2cd-ec464222ebea"
+                            UserId = "da8cafd2-8097-4dd7-b09c-6b7563b83f97",
+                            RoleId = "a6e00b56-cd3c-455f-9ce1-691cfe948bf8"
                         },
                         new
                         {
-                            UserId = "56646946-3ee5-4782-b87c-5d103a700069",
-                            RoleId = "47314eeb-7be5-4469-b3f0-79a68e38ac22"
+                            UserId = "61fdeab8-e5b8-4358-9fac-f54630f05097",
+                            RoleId = "2653a245-d343-43ba-bc89-90a64bbbece7"
                         });
                 });
 
@@ -378,42 +462,50 @@ namespace Joan_DynamicComment.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ProfileImgUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasDiscriminator().HasValue("AppUser");
 
                     b.HasData(
                         new
                         {
-                            Id = "215b4ba2-b1ef-4fa1-a0af-96774daeacec",
+                            Id = "da8cafd2-8097-4dd7-b09c-6b7563b83f97",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d7e10652-0d45-4fb0-818d-db47cc9b131d",
+                            ConcurrencyStamp = "dc391245-735d-4f69-ae4b-1584f6512bab",
                             Email = "rft.smayilov@bk.ru",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "RFT.SMAYILOV@BK.RU",
                             NormalizedUserName = "RUFAT1122",
-                            PasswordHash = "AQAAAAEAACcQAAAAENWrUtBSpMqBUwf1MJM4VLzyKJdg4Iyzcuyedzmg5Byu1fJloiPocW7bKbRhlerSsg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEISCuH5PLhvUAcJyltrWslEatbdBs7opiXWe+QBFT1Ek6eOebsniiNp5TKYC5g3yVg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "63ffa3c9-e83a-44c6-be06-d9d1e225b873",
+                            SecurityStamp = "467833fa-de7f-4f34-85ae-be3c1138de7b",
                             TwoFactorEnabled = false,
                             UserName = "Rufat1122",
-                            FullName = "RufatCode"
+                            FullName = "RufatCode",
+                            IsActive = false
                         },
                         new
                         {
-                            Id = "56646946-3ee5-4782-b87c-5d103a700069",
+                            Id = "61fdeab8-e5b8-4358-9fac-f54630f05097",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f09fee25-cb32-447a-95e9-b8e3ca211d2b",
+                            ConcurrencyStamp = "3b81f437-7f2b-4f65-b30f-ca3e0f985466",
                             Email = "rufatri@code.edu.az",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "RUFATRI@CODE.EDU.AZ",
                             NormalizedUserName = "RUFAT123",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAefjsbOouLnHZ3268yG6Q4ugV9TdfO3ZUGfkGv8dU4J51C6FCsIv7pPhoI2gQiz6A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKAT6yzsGWPtcqYjOoeCFJq480MccWIP8nrbI1lnm2UhnYUjlj0fVqMGYq4FLTxXbQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3020dc6c-81a7-43cc-be09-2dfba6fab147",
+                            SecurityStamp = "7a5dac0c-cc1d-499f-ae2a-dcb2957bf617",
                             TwoFactorEnabled = false,
                             UserName = "Rufat123",
-                            FullName = "RufatIsmayilov"
+                            FullName = "RufatIsmayilov",
+                            IsActive = false
                         });
                 });
 

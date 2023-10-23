@@ -17,6 +17,7 @@
                         <tr>
                             <th>Image</th>
                             <th>Name</th>
+                            <th>Count</th>
                             <th>Price</th>
                             <th>SalePercantage</th>
                             <th>Settings</th>
@@ -30,6 +31,7 @@
                                     <img src="~/assets/img/@product.ProductImages.FirstOrDefault(pi=>pi.IsMain).ImgUrl" />
                                 </td>
                                 <td>@product.Name</td>
+                                <td>@product.Count</td>
                                 <td>@product.Price$</td>
                                 <td>@product.SalePercantage%</td>
                                 <td>

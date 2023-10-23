@@ -10,10 +10,11 @@ namespace Joan_DynamicComment.Models
 		public string AppUserId { get; set; }
 		public AppUser AppUser { get; set; }
 		public string Content { get; set; }
-		public DateTime Date { get; set; } = DateTime.Now;
+		public DateTime Date { get; set; } 
 		public Product Product { get; set; }
 		[ForeignKey(nameof(Product))]
 		public int ProductId { get; set; }
+		public bool IsDeleted { get; set; }
 		public Comment()
 		{
 		}

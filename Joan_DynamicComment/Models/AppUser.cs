@@ -9,6 +9,7 @@ namespace Joan_DynamicComment.Models
 		public string FullName { get; set; }
 		public List<Comment> Comments { get; set; }
 		public bool IsActive { get; set; }
+		public string? ProfileImgUrl { get; set; }
         public AppUser()
 		{
 			Comments = new();

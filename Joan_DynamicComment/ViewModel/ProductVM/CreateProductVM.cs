@@ -12,6 +12,8 @@ namespace Joan_DynamicComment.ViewModel.ProductVM
 		public int SalePercantage { get; set; }
 		[MinLength(15)]
 		public string Description { get; set; }
+		[Range(0,int.MaxValue)]
+		public int Count { get; set; }
 		public int CategoryId { get; set; }
         public CreateProductVM()
 		{

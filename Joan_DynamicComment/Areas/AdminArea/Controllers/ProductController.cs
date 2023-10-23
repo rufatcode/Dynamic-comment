@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Joan_DynamicComment.DAL;
 using Joan_DynamicComment.Models;
 using Joan_DynamicComment.ViewModel.ProductVM;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Joan_DynamicComment.Areas.AdminArea.Controllers
 {
     [Area("AdminArea")]
+    [Authorize(Roles = "Admin,SupperAdmin")]
     public class ProductController : Controller
     {
         // GET: /<controller>/
@@ -48,6 +50,7 @@ namespace Joan_DynamicComment.Areas.AdminArea.Controllers
                 return View();
             }
             Product product = new();
+           
             int demo = 0;
             foreach (var image in createProductVM.formFiles)
             {
@@ -86,10 +89,13 @@ namespace Joan_DynamicComment.Areas.AdminArea.Controllers
             product.Name = createProductVM.Name;
             product.Price = createProductVM.Price;
             product.SalePercantage = createProductVM.SalePercantage;
+            product.IsDeleted = false;
+            product.Count = createProductVM.Count;
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
+        [Authorize(Roles = "SupperAdmin")]
         public async Task<IActionResult> Delete(int?id)
         {
             if (id==null)
@@ -101,7 +107,7 @@ namespace Joan_DynamicComment.Areas.AdminArea.Controllers
             {
                 return NotFound();
             }
-            _context.Products.Remove(product);
+            product.IsDeleted = true;
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -118,6 +124,7 @@ namespace Joan_DynamicComment.Areas.AdminArea.Controllers
             }
             return View(product);
         }
+        [Authorize(Roles = "SupperAdmin")]
         public async Task<IActionResult> Update(int? id)
         {
             if (id==null)
@@ -141,6 +148,7 @@ namespace Joan_DynamicComment.Areas.AdminArea.Controllers
             updateProductVM.SalePercantage = product.SalePercantage;
             updateProductVM.Description = product.Description;
             updateProductVM.CategoryId = product.CategoryId;
+            updateProductVM.Count = product.Count;
             return View(updateProductVM);
         }
         [HttpPost]
@@ -209,6 +217,7 @@ namespace Joan_DynamicComment.Areas.AdminArea.Controllers
             product.Price = updateProductVM.Price;
             product.Description = updateProductVM.Description;
             product.CategoryId = updateProductVM.CategoryId;
+            product.Count = updateProductVM.Count;
             await _context.SaveChangesAsync();
 
             

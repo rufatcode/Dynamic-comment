@@ -3,6 +3,7 @@ using Joan_DynamicComment.DAL;
 using Joan_DynamicComment.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace Joan_DynamicComment
 {
@@ -10,7 +11,8 @@ namespace Joan_DynamicComment
 	{
 		public static void Registration(this IServiceCollection services,ConfigurationManager configuration)
 		{
-			services.AddControllersWithViews();
+            
+            services.AddControllersWithViews();
 			services.AddDbContext<AppDbContext>(option =>
 			{
 				option.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
@@ -21,7 +23,7 @@ namespace Joan_DynamicComment
 			});
 			services.AddRazorPages();
 
-            services.AddIdentity<AppUser, IdentityRole>(option =>
+			services.AddIdentity<AppUser, IdentityRole>(option =>
 			{
 				option.User.RequireUniqueEmail = true;
 				option.Password.RequireDigit = true;
@@ -30,12 +32,18 @@ namespace Joan_DynamicComment
 				option.Password.RequireNonAlphanumeric = true;
 				option.Password.RequireUppercase = true;
 				option.SignIn.RequireConfirmedEmail = true;
+				option.SignIn.RequireConfirmedAccount = true;
 				//option.SignIn.RequireConfirmedPhoneNumber = true;
 				option.Lockout.AllowedForNewUsers = true;
 				option.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
 				option.Lockout.MaxFailedAccessAttempts = 4;
 			}).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
-		}
+            services.Configure<DataProtectionTokenProviderOptions>(option =>
+            {
+                option.TokenLifespan = TimeSpan.FromMinutes(10);
+
+            });
+        }
 	}
 }
 

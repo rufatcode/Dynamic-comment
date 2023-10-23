@@ -38,8 +38,12 @@
                             </div>
                             <h4>New here?</h4>
                             <h6 class="font-weight-light">Signing up is easy. It only takes a few steps</h6>
-                            <form class="pt-3" method="post">
+                            <form class="pt-3" method="post" enctype="multipart/form-data">
                                 <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                                <div class="form-group">
+                                    <input asp-for="ProfileImgUrl" class="form-control form-control-lg">
+                                    <span class="text-danger" asp-validation-for="ProfileImgUrl"></span>
+                                </div>
                                 <div class="form-group">
                                     <input asp-for="UserName" class="form-control form-control-lg" placeholder="Username">
                                     <span class="text-danger" asp-validation-for="UserName"></span>

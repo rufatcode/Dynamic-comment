@@ -15,6 +15,10 @@ namespace Joan_DynamicComment.Models
 		public Category Category { get; set; }
 		public List<ProductImage> ProductImages { get; set; }
 		public List<Comment> Comments { get; set; }
+		public bool IsDeleted { get; set; }
+		public bool IsAvaliable { get; set; }
+		public int Count { get; set; }
+		public DateTime CreatedAt { get; set; }
 		public Product()
 		{
 			ProductImages = new();

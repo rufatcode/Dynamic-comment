@@ -61,3 +61,11 @@
 /Volumes/Mac/AspNet/Joan_DynamicComment/Joan_DynamicComment/obj/Debug/net6.0/Joan_DynamicComment.pdb
 /Volumes/Mac/AspNet/Joan_DynamicComment/Joan_DynamicComment/obj/Debug/net6.0/Joan_DynamicComment.genruntimeconfig.cache
 /Volumes/Mac/AspNet/Joan_DynamicComment/Joan_DynamicComment/obj/Debug/net6.0/ref/Joan_DynamicComment.dll
+/Volumes/Mac/AspNet/Joan_DynamicComment/Joan_DynamicComment/bin/Debug/net6.0/Microsoft.AspNetCore.Authentication.Negotiate.dll
+/Volumes/Mac/AspNet/Joan_DynamicComment/Joan_DynamicComment/bin/Debug/net6.0/Microsoft.AspNetCore.Connections.Abstractions.dll
+/Volumes/Mac/AspNet/Joan_DynamicComment/Joan_DynamicComment/bin/Debug/net6.0/Microsoft.Extensions.Features.dll
+/Volumes/Mac/AspNet/Joan_DynamicComment/Joan_DynamicComment/bin/Debug/net6.0/System.DirectoryServices.Protocols.dll
+/Volumes/Mac/AspNet/Joan_DynamicComment/Joan_DynamicComment/bin/Debug/net6.0/System.IO.Pipelines.dll
+/Volumes/Mac/AspNet/Joan_DynamicComment/Joan_DynamicComment/bin/Debug/net6.0/runtimes/linux/lib/net6.0/System.DirectoryServices.Protocols.dll
+/Volumes/Mac/AspNet/Joan_DynamicComment/Joan_DynamicComment/bin/Debug/net6.0/runtimes/osx/lib/net6.0/System.DirectoryServices.Protocols.dll
+/Volumes/Mac/AspNet/Joan_DynamicComment/Joan_DynamicComment/bin/Debug/net6.0/runtimes/win/lib/net6.0/System.DirectoryServices.Protocols.dll

@@ -11,11 +11,25 @@ namespace Joan_DynamicComment.DAL
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<NavBar> NavBars { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 		public AppDbContext(DbContextOptions options):base(options)
 		{
 		}
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
+
+
+            builder.Entity<NavBar>().HasData(new NavBar { Id=1,Key="Location",Value= "184 Main Rd E, St Albans VIC 3021, Australia" },
+                new NavBar { Id=2,Key="Mail",Value= "rft.smayilov@bk.com" },
+                new NavBar { Id=3,Key="Phone",Value= "+ 00 254 254565" },
+                new NavBar { Id=7,Key="LinkendIn",Value= "https://www.linkedin.com/in/rufat-ismayilov/" },
+                new NavBar { Id=4,Key="Instegram",Value= "https://www.integram.com/in/rufat-ismayilov/" },
+                new NavBar { Id = 5, Key = "Facebook", Value = "https://www.Facebook.com/in/rufat-ismayilov/" },
+                new NavBar { Id = 6, Key = "Twitter", Value = "https://www.Twitter.com/in/rufat-ismayilov/" }
+                );
+
             string AdminId = Guid.NewGuid().ToString();
             string SupperAdminId = Guid.NewGuid().ToString();
             string AdminRoleId = Guid.NewGuid().ToString();
@@ -40,6 +54,7 @@ namespace Joan_DynamicComment.DAL
             AppUser SupperAdmin = new AppUser
             {
                 Id = SupperAdminId,
+
                 FullName = "RufatIsmayilov",
                 Email = "rufatri@code.edu.az",
                 UserName = "Rufat123",

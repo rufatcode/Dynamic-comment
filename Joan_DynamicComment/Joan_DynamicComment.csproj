@@ -22,6 +22,14 @@
     <None Remove="Areas\AdminArea\Views\Product\" />
     <None Remove="ViewModel\" />
     <None Remove="ViewModel\ProductVM\" />
+    <None Remove="Configuration\" />
+    <None Remove="ViewComponents\" />
+    <None Remove="Views\Shared\Components\" />
+    <None Remove="Views\Shared\Components\Header\" />
+    <None Remove="Views\Shared\Components\Footer\" />
+    <None Remove="Areas\AdminArea\Views\Role\" />
+    <None Remove="Areas\AdminArea\Views\User\" />
+    <None Remove="ViewModel\Detail\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DAL\" />
@@ -39,6 +47,14 @@
     <Folder Include="Areas\AdminArea\Views\Product\" />
     <Folder Include="ViewModel\" />
     <Folder Include="ViewModel\ProductVM\" />
+    <Folder Include="Configuration\" />
+    <Folder Include="ViewComponents\" />
+    <Folder Include="Views\Shared\Components\" />
+    <Folder Include="Views\Shared\Components\Header\" />
+    <Folder Include="Views\Shared\Components\Footer\" />
+    <Folder Include="Areas\AdminArea\Views\Role\" />
+    <Folder Include="Areas\AdminArea\Views\User\" />
+    <Folder Include="ViewModel\Detail\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.0">

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace FrontoBack.ViewModel.AccountVM
+namespace Joan_DynamicComment.ViewModel.AccountVM
 {
 	public class LoginVM
 	{

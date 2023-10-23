@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace FrontoBack.Business.ViewModel.AccountVM
+namespace Joan_DynamicComment.ViewModel.AccountVM
 {
 	public class ResetPasswordVM
 	{

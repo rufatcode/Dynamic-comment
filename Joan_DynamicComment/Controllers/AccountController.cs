@@ -4,9 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
-using FrontoBack.Business.ViewModel.AccountVM;
-using FrontoBack.ViewModel.AccountVM;
 using Joan_DynamicComment.Models;
+using Joan_DynamicComment.ViewModel.AccountVM;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,18 +18,18 @@ namespace Joan_DynamicComment.Controllers
         // GET: /<controller>/
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,IWebHostEnvironment webHostEnvironment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
             return View();
         }
-        public async Task<IActionResult> Register()
+        public IActionResult Register()
         {
             return View();
         }
@@ -42,112 +41,40 @@ namespace Joan_DynamicComment.Controllers
             {
                 return View();
             }
-            AppUser appUser = new AppUser();
+            if (_userManager.Users.Any(u=>u.UserName.ToLower()==registerVM.UserName.ToLower()))
+            {
+                ModelState.AddModelError("UserName", "Username must be unique for every user");
+                return View();
+            }
+            AppUser appUser = new();
             appUser.UserName = registerVM.UserName;
             appUser.FullName = registerVM.FullName;
             appUser.Email = registerVM.Email;
             appUser.IsActive = true;
-            IdentityResult result = await _userManager.CreateAsync(appUser, registerVM.Password);
-
-            if (!result.Succeeded)
+            if (!registerVM.ProfileImgUrl.ContentType.Contains("image"))
             {
-                foreach (var error in result.Errors)
+                ModelState.AddModelError("ProfileImgUrl", "must upload only image");
+                return View();
+            }
+            else if (registerVM.ProfileImgUrl.Length/1024>1000)
+            {
+                ModelState.AddModelError("ProfileImgUrl", "image size must be smaller than 1kb");
+                return View();
+            }
+            string fileName = Guid.NewGuid().ToString()+".jpeg";
+            string path = Path.Combine(_webHostEnvironment.WebRootPath, "assets", "img", fileName);
+            
+            appUser.ProfileImgUrl = fileName;
+            
+            var resoult=await _userManager.CreateAsync(appUser, registerVM.Password);
+            if (resoult.Succeeded)
+            {
+                using (FileStream fileStream = new FileStream(path, FileMode.Create))
                 {
-                    ModelState.AddModelError("", error.Description);
+                    await registerVM.ProfileImgUrl.CopyToAsync(fileStream);
                 }
-                return View();
             }
-
-            await _userManager.AddToRoleAsync(appUser, "User");
-            var token = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
-            Random verificationDigits = new Random();
-            int digits = verificationDigits.Next(100000, 1000000);
-            var link = Url.Action(nameof(VerifyEmail), "Account", new { VerifyEmail = appUser.Email, token, verfyDigit = digits }, Request.Scheme, Request.Host.ToString());
-            MailMessage mailMessage = new();
-            mailMessage.From = new MailAddress("rufatri@code.edu.az", "Fiorella App");
-            mailMessage.To.Add(new MailAddress(appUser.Email));
-            mailMessage.Subject = "Verify Email";
-            var verificationMessageBody = string.Empty;
-            using (StreamReader fileStream = new StreamReader("wwwroot/Verification/VerificationEmail.html"))
-            {
-                verificationMessageBody = await fileStream.ReadToEndAsync();
-            }
-            verificationMessageBody = verificationMessageBody.Replace("{{digits}}", digits.ToString());
-            verificationMessageBody = verificationMessageBody.Replace("{{link}}", link);
-            verificationMessageBody = verificationMessageBody.Replace("{{userName}}", appUser.FullName);
-            mailMessage.Body = verificationMessageBody;
-            mailMessage.IsBodyHtml = true;
-            SmtpClient smtpClient = new();
-            smtpClient.Host = "smtp.gmail.com";
-            smtpClient.Port = 587;
-            smtpClient.EnableSsl = true;
-            smtpClient.Credentials = new NetworkCredential("rufatri@code.edu.az", "bazi tvxk bnta hymo");
-            smtpClient.Send(mailMessage);
-            return RedirectToAction("VerifyEmail", "Account");
-        }
-        public IActionResult VerifyEmail()
-        {
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> VerifyEmail(string VerifyEmail, string token, int verfyDigit, int digits)
-        {
-            if (digits != verfyDigit)
-            {
-                ModelState.AddModelError("", "incorrect verification number");
-                return View();
-            }
-            AppUser appUser = await _userManager.FindByEmailAsync(VerifyEmail);
-            await _userManager.ConfirmEmailAsync(appUser, token);
-            return RedirectToAction("Login");
-        }
-        public IActionResult ForgetPassword()
-        {
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> ForgetPassword(string email)
-        {
-            AppUser appUser = await _userManager.FindByEmailAsync(email);
-            if (appUser == null)
-            {
-                ModelState.AddModelError("Email", "Email is not valid");
-                return View();
-            }
-
-            var token = await _userManager.GeneratePasswordResetTokenAsync(appUser);
-            var link = Url.Action(nameof(ResetPassword), "Account",
-                new { email = appUser.Email, token }, Request.Scheme, Request.Host.ToString()
-                );
-            MailMessage mailMessage = new();
-            mailMessage.From = new MailAddress("rufatri@code.edu.az", "Fiorella App");
-            mailMessage.To.Add(new MailAddress(appUser.Email));
-            mailMessage.Subject = "Reset Password";
-            mailMessage.Body = $"<a href={link}>click here for reset account</a>";
-            mailMessage.IsBodyHtml = true;
-            SmtpClient smtpClient = new SmtpClient();
-            smtpClient.Host = "smtp.gmail.com";
-            smtpClient.Port = 587;
-            smtpClient.EnableSsl = true;
-            smtpClient.Credentials = new NetworkCredential("rufatri@code.edu.az", "bazi tvxk bnta hymo");
-            smtpClient.Send(mailMessage);
-            return RedirectToAction("Index", "Product");
-        }
-        public IActionResult ResetPassword(string token)
-        {
-
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> ResetPassword(string email, string token, ResetPasswordVM resetPasswordVM)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
-            AppUser appUser = await _userManager.FindByEmailAsync(email);
-            var resoult = await _userManager.ResetPasswordAsync(appUser, token, resetPasswordVM.Password);
-            if (!resoult.Succeeded)
+            else if (!resoult.Succeeded)
             {
                 foreach (var error in resoult.Errors)
                 {
@@ -155,8 +82,56 @@ namespace Joan_DynamicComment.Controllers
                 }
                 return View();
             }
+            await _userManager.AddToRoleAsync(appUser, "User");
+            string token =await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
+            var link = Url.Action(nameof(VerifyEmail), "Account", new {VerifyEmail=appUser.Email,token},Request.Scheme,Request.Host.ToString());
+            MailMessage mailMessage = new();
+            mailMessage.From=new MailAddress("rufatri@code.edu.az", "Joan App");
+            mailMessage.To.Add(new MailAddress(appUser.Email));
+            mailMessage.Subject = "verify Email";
+            var verifyEmailHtmlContent = string.Empty;
+            using (StreamReader streamReader = new StreamReader("wwwroot/Verification/VerificationEmail.html"))
+            {
+                verifyEmailHtmlContent =await streamReader.ReadToEndAsync();
+            }
+            verifyEmailHtmlContent= verifyEmailHtmlContent.Replace("{{link}}", link);
+            verifyEmailHtmlContent = verifyEmailHtmlContent.Replace("{{userName}}", appUser.UserName);
+            mailMessage.Body = verifyEmailHtmlContent;
+            mailMessage.IsBodyHtml = true;
+            SmtpClient smtpClient = new();
+            smtpClient.Port = 587;
+            smtpClient.Host = "smtp.gmail.com";
+            smtpClient.EnableSsl = true;
+            smtpClient.Credentials = new NetworkCredential("rufatri@code.edu.az", "bazi tvxk bnta hymo");
+            smtpClient.Send(mailMessage);
+            TempData["Verification"] = "Please Verify Account";
+            return RedirectToAction("Login","Account");
+        }
+        public async Task<IActionResult> VerifyEmail(string VerifyEmail, string token)
+        {
+            AppUser appUser =await _userManager.FindByEmailAsync(VerifyEmail);
+            if (appUser==null)
+            {
+                return RedirectToAction("TokenIsNotValid");
+            }
+            bool isSuccess = await _userManager.VerifyUserTokenAsync(appUser, _userManager.Options.Tokens.EmailConfirmationTokenProvider, "VerifyEmail", token);
+            if (!isSuccess)
+            {
+                return RedirectToAction("TokenIsNotValid");
+            }
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> VerifyEmail(string VerifyEmail,string token, int id)
+        {
+            AppUser appUser =await _userManager.FindByEmailAsync(VerifyEmail);
+            await _userManager.ConfirmEmailAsync(appUser, token);
             await _userManager.UpdateSecurityStampAsync(appUser);
             return RedirectToAction("Login");
+        }
+        public IActionResult TokenIsNotValid()
+        {
+            return View();
         }
         public async Task<IActionResult> Login()
         {
@@ -170,20 +145,19 @@ namespace Joan_DynamicComment.Controllers
             {
                 return View();
             }
-            AppUser appUser = await _userManager.FindByNameAsync(loginVM.UserNameOrEmail);
-
-            if (appUser == null)
+            AppUser appUser = await _userManager.FindByEmailAsync(loginVM.UserNameOrEmail);
+            if (appUser==null)
             {
-                appUser = await _userManager.FindByEmailAsync(loginVM.UserNameOrEmail);
-                if (appUser == null)
+                appUser = await _userManager.FindByNameAsync(loginVM.UserNameOrEmail);
+                if (appUser==null)
                 {
-                    ModelState.AddModelError("", "Something Went wrong");
+                    ModelState.AddModelError("UserNameOrEmail", "User is not valid");
                     return View();
                 }
             }
-            else if (!appUser.IsActive)
+            if (!appUser.IsActive)
             {
-                ModelState.AddModelError("", "User is Blocked");
+                ModelState.AddModelError("", "User is not active");
                 return View();
             }
             var resoult = await _signInManager.PasswordSignInAsync(appUser, loginVM.Password, loginVM.Remember, true);
@@ -192,9 +166,9 @@ namespace Joan_DynamicComment.Controllers
                 ModelState.AddModelError("", "User is blocked");
                 return View();
             }
-            else if (!await _userManager.IsEmailConfirmedAsync(appUser))
+            else if (!appUser.EmailConfirmed)
             {
-                ModelState.AddModelError("", "Please verify account");
+                ModelState.AddModelError("", "Pleae verify account");
                 return View();
             }
             else if (!resoult.Succeeded)
@@ -202,20 +176,83 @@ namespace Joan_DynamicComment.Controllers
                 ModelState.AddModelError("", "Something went wrong");
                 return View();
             }
-
             await _signInManager.SignInAsync(appUser, loginVM.Remember);
-            if (ReturnUrl != null)
+            if (ReturnUrl!=null)
             {
                 return Redirect(ReturnUrl);
             }
-            return Redirect("/home/index");
+            return RedirectToAction("Index", "Home");
         }
-
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> ForgerPassword()
         {
-            await _signInManager.SignOutAsync();
-            return Redirect("/home/index");
+            return View();
         }
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> ForgetPassword(string email)
+        {
+            AppUser appUser =await _userManager.FindByEmailAsync(email);
+            if (appUser==null)
+            {
+                ModelState.AddModelError("Email", "User is not valid");
+                return View();
+            }
+            else if (!appUser.IsActive)
+            {
+                ModelState.AddModelError("", "User is not active");
+                return View();
+            }
+            else if (await _userManager.IsLockedOutAsync(appUser))
+            {
+                ModelState.AddModelError("", "User is blocked");
+                return View();
+            }
+            var token =await _userManager.GeneratePasswordResetTokenAsync(appUser);
+            var link = Url.Action(nameof(ResetPassword), "Account", new { email = appUser.Email, token }, Request.Scheme, Request.Host.ToString());
+            MailMessage mailMessage = new();
+            mailMessage.From = new MailAddress("rufatri@code.edu.az", "Joan App");
+            mailMessage.To.Add(new MailAddress(appUser.Email));
+            mailMessage.Subject = "Reset Password";
+            mailMessage.Body = $"<a href={link}>Reset Password</a>";
+            mailMessage.IsBodyHtml = true;
+            SmtpClient smtpClient = new();
+            smtpClient.Port = 587;
+            smtpClient.EnableSsl = true;
+            smtpClient.Host = "smtp.gmail.com";
+            smtpClient.Credentials = new NetworkCredential("rufatri@code.edu.az", "bazi tvxk bnta hymo");
+            smtpClient.Send(mailMessage);
+            return RedirectToAction("Index", "Home");
+        }
+        public async Task<IActionResult> ResetPassword(string email, string token)
+        {
+            AppUser appUser = await _userManager.FindByEmailAsync(email);
+            if (appUser==null||await _userManager.IsLockedOutAsync(appUser))
+            {
+                return RedirectToAction("TokenIsNotValid");
+            }
+            bool isSuccess =await _userManager.VerifyUserTokenAsync(appUser, _userManager.Options.Tokens.PasswordResetTokenProvider, "ResetPassword", token);
+            if (!isSuccess)
+            {
+                return RedirectToAction("TokenIsNotValid");
+            }
+            return View();
+        }
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> ResetPassword(string email,string token,ResetPasswordVM resetPasswordVM)
+        {
+            AppUser appUser = await _userManager.FindByEmailAsync(email);
+            await _userManager.ResetPasswordAsync(appUser, token, resetPasswordVM.Password);
+            await _userManager.UpdateSecurityStampAsync(appUser);
+            return RedirectToAction("Login");
+        }
+        
+        public async Task<IActionResult> LogOut()
+        {
+           await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+       
     }
 }
 
