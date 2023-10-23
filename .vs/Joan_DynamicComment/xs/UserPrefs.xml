@@ -1,27 +1,25 @@
 ﻿<Properties StartupConfiguration="{B144BAF0-A486-424E-9096-0ACCE4EB4A6F}|Default">
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Joan_DynamicComment/Controllers/AccountController.cs">
+    <Files>
+      <File FileName="Joan_DynamicComment/Controllers/AccountController.cs" Line="1" Column="1" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Joan_DynamicComment" expanded="True">
-            <Node name="Joan_DynamicComment">
-              <Node name="Configuration" expanded="True" />
-              <Node name="Controllers" expanded="True" />
-              <Node name="DAL" expanded="True" />
-              <Node name="Models" expanded="True">
-                <Node name="Comment.cs" selected="True" />
-              </Node>
-              <Node name="Properties" expanded="True" />
-              <Node name="ViewModel">
-                <Node name="AccountVM" expanded="True" />
-                <Node name="Detail" expanded="True" />
+            <Node name="Joan_DynamicComment" expanded="True">
+              <Node name="Controllers" expanded="True">
+                <Node name="AccountController.cs" selected="True" />
               </Node>
               <Node name="Views" expanded="True">
-                <Node name="Account" expanded="True" />
                 <Node name="Home" expanded="True" />
-                <Node name="Shared" expanded="True">
-                  <Node name="Components" expanded="True">
-                    <Node name="Header" expanded="True" />
+              </Node>
+              <Node name="wwwroot" expanded="True">
+                <Node name="lib" expanded="True">
+                  <Node name="bootstrap" expanded="True">
+                    <Node name="dist" expanded="True">
+                      <Node name="js" expanded="True" />
+                    </Node>
                   </Node>
                 </Node>
               </Node>
@@ -35,7 +33,7 @@
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.ItemProperties.Joan__DynamicComment PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

@@ -40,7 +40,7 @@ namespace Joan_DynamicComment.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Joan_DynamicComment.Models.Comment", b =>
@@ -76,7 +76,7 @@ namespace Joan_DynamicComment.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("Joan_DynamicComment.Models.NavBar", b =>
@@ -97,7 +97,7 @@ namespace Joan_DynamicComment.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("NavBars");
+                    b.ToTable("NavBars", (string)null);
 
                     b.HasData(
                         new
@@ -187,7 +187,7 @@ namespace Joan_DynamicComment.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Joan_DynamicComment.Models.ProductImage", b =>
@@ -212,7 +212,7 @@ namespace Joan_DynamicComment.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImages");
+                    b.ToTable("ProductImages", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

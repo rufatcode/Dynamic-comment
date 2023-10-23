@@ -42,7 +42,7 @@ namespace Joan_DynamicComment.Controllers
             }
            detail.UserName = User.Identity.IsAuthenticated? appUser.UserName:"";
            detail.Email = User.Identity.IsAuthenticated? appUser.Email:"";
-            Product product = await _context.Products.Include(p=>p.Comments).Include(p=>p.ProductImages).Include(p=>p.Category).AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+            Product product = await _context.Products.Include(p=>p.Comments).ThenInclude(c=>c.AppUser).Include(p=>p.ProductImages).Include(p=>p.Category).AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
             if (product==null||product.IsDeleted)
             {
                 return RedirectToAction("TokenIsNotValid","Account");
@@ -59,17 +59,18 @@ namespace Joan_DynamicComment.Controllers
         [HttpPost]
         public async Task<IActionResult> Comment(string commnet,int productId)
         {
-            if (commnet.Trim()==null)
+            if (commnet.Trim()=="")
             {
                 return RedirectToAction("TokenIsNotValid", "Account");
             }
             if (!User.Identity.IsAuthenticated)
             {
                 TempData["Warning"] = "Please register for comment writing";
+                return Redirect($"/Home/Detail/{productId}");
             }
             AppUser appUser = await _userManager.FindByNameAsync(User.Identity.Name);
             Product product =await _context.Products.FirstOrDefaultAsync(p => p.Id == productId);
-            _context.Comments.Add(new Comment { IsDeleted = false,AppUserId=appUser.Id,ProductId=productId,Content=commnet });
+            _context.Comments.Add(new Comment { IsDeleted = false,AppUserId=appUser.Id,ProductId=productId,Content=commnet,Date=DateTime.Now });
             await _context.SaveChangesAsync();
             return Redirect($"/Home/Detail/{productId}");
         }
@@ -91,7 +92,7 @@ namespace Joan_DynamicComment.Controllers
                 .ToList();
             }
             detail.SearchProducts = products;
-            detail.Product = await _context.Products.Include(p=>p.Comments).Include(p => p.ProductImages).Include(p => p.Category).AsNoTracking().FirstOrDefaultAsync(p => p.Id == productId);
+            detail.Product = await _context.Products.Include(p=>p.Comments).ThenInclude(c=>c.AppUser).Include(p => p.ProductImages).Include(p => p.Category).AsNoTracking().FirstOrDefaultAsync(p => p.Id == productId);
             AppUser appUser = new();
             if (User.Identity.IsAuthenticated)
             {
@@ -100,6 +101,54 @@ namespace Joan_DynamicComment.Controllers
             detail.UserName = User.Identity.IsAuthenticated ? appUser.UserName : "";
             detail.Email = User.Identity.IsAuthenticated ? appUser.Email : "";
             return View(detail);
+        }
+        public async Task<IActionResult> RemoveComment(int? id, int productId)
+        {
+            if (id==null)
+            {
+                return RedirectToAction("TokenIsNotValid", "Account");
+            }
+            else if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("TokenIsNotValid", "Account");
+            }
+            Comment comment = await _context.Comments.FirstOrDefaultAsync(c => c.Id == id);
+            if (comment==null)
+            {
+                return RedirectToAction("TokenIsNotValid", "Account");
+            }
+            comment.IsDeleted = true;
+            await _context.SaveChangesAsync();
+            return Redirect($"/Home/Detail/{productId}");
+        }
+        public async Task<IActionResult> UpdateComment(int?id,int productId)
+        {
+            if (id==null)
+            {
+                return BadRequest();
+            }
+
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateComment(string content,int productId,int commentId)
+        {
+            if (content.Trim()=="")
+            {
+                return BadRequest();
+            }
+            else if (productId==null||commentId==null)
+            {
+                return RedirectToAction("TokenIsNotValid", "Account");
+            }
+            Comment comment = await _context.Comments.FirstOrDefaultAsync(c => c.Id == commentId);
+            if (comment == null||comment.IsDeleted)
+            {
+                return RedirectToAction("TokenIsNotValid", "Account");
+            }
+            comment.Content = content;
+            await _context.SaveChangesAsync();
+            return Redirect($"/Home/Detail/{productId}");
         }
     }
 }
